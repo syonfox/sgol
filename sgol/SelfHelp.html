@@ -20,8 +20,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
 
-
-
+    <link rel="stylesheet" href="./node_modules/jspanel4/dist/jspanel.css">
 
 
     <title>SGOL - Self Help</title>
@@ -36,9 +35,21 @@
         /*    max-width: 100%;*/
         /*}*/
 
-        .video-container { position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden; }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            padding-top: 30px;
+            height: 0;
+            overflow: hidden;
+        }
 
-        .video-container iframe, .video-container object, .video-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .video-container iframe, .video-container object, .video-container embed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
 
     </style>
 
@@ -72,7 +83,7 @@
 <p>
     Now that you know what the just of it a pretty good goal is to not be shitty and tell the truth it's
     surprisingly hard sometimes but usually its the least you can do. If you take on too much just ask how much
-    am I willing and able to take on.  There is no
+    am I willing and able to take on. There is no
 </p>
 <p>
     Now watch this:
@@ -88,21 +99,42 @@
 
 <a href="https://www.netflix.com/title/81464765">14 Peaks Netflix</a>
 
-<p>I haven't tried to this yet but have heard good things <a href="https://www.selfauthoring.com/">www.selfauthoring.com</a></p>
+<p>I haven't tried to this yet but have heard good things <a
+        href="https://www.selfauthoring.com/">www.selfauthoring.com</a></p>
 
 <div class="video-container">
-<iframe src="https://www.youtube-nocookie.com/embed/qa9u5t3C0AI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe src="https://www.youtube-nocookie.com/embed/qa9u5t3C0AI" title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
 </div>
 
 <blockquote id="qotd">
     "YOLO" - 12 year old me.
 </blockquote>
 <button onclick="updateQOTD()">Another Quote</button>
+<button onclick="saveQOTD()">Save Quote</button>
+
+
+<div id="saved_quotes"></div>
+
+<script src="./node_modules/jquery/dist/jquery.min.js"></script>
+
+<!-- loading jsPanel javascript -->
+<script src="./node_modules/jspanel4/dist/jspanel.js"></script>
+<!-- optionally load jsPanel extensions -->
+<script src="./node_modules/jspanel4/dist/extensions/contextmenu/jspanel.contextmenu.js"></script>
+<script src="./node_modules/jspanel4/dist/extensions/hint/jspanel.hint.js"></script>
+<script src="./node_modules/jspanel4/dist/extensions/modal/jspanel.modal.js"></script>
+<script src="./node_modules/jspanel4/dist/extensions/tooltip/jspanel.tooltip.js"></script>
+<script src="./node_modules/jspanel4/dist/extensions/dock/jspanel.dock.js"></script>
+<!-- Gun -->
+<script src="./node_modules/gun/gun.js"></script>
 
 
 <script>
     // let ps = document.querySelectorAll('p');
     // let str = ps.forEach(p => console.log(p.innerText));
+    let quote = document.getElementById('qotd');
 
     function updateQOTD() {
         fetch('https://api.quotable.io/random')
@@ -110,8 +142,6 @@
                 return res.json()
             })
             .then(data => {
-                let quote = document.getElementById('qotd');
-
                 quote.innerText = `"${data.content}" ~ ${data.author}`
 
             })
@@ -119,6 +149,32 @@
 
     updateQOTD()
 
+    var gun = new Gun({
+        // peers: ['http://bullchat.syon.ca:8585/gun'],
+        peers: ['https://bullchat.syon.ca/gun'],
+    });
+
+    let db = gun.get('sgol');
+    db.get('saved')
+    q = db.get('saved_quotes')
+
+    function saveQOTD() {
+        q.set(quote.innerText);
+    }
+
+    let quoteDom = document.createElement('blockquote');
+    let quoteContainer = document.getElementById('saved_quotes');
+    // let saveQuoteBtn = document.getElementById('save_quote');
+
+    q.map().once(data => {
+
+            let newQuote = quoteDom.cloneNode();
+            // newQuote.innerText = `"${data.content}" ~ ${data.author}`;
+            newQuote.innerText = data;
+            quoteContainer.appendChild(newQuote);
+            console.log(data);
+        }
+    )
 
     // https://api.quotable.io/random?tags=technology,famous-quotes
 
