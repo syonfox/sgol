@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">-->
+    <!--    <link rel="stylesheet" href="https://cdn.rawgit.com/Chalarangelo/mini.css/v3.0.1/dist/mini-default.min.css">-->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/logo/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/logo/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/logo/favicon-16x16.png">
+    <link rel="manifest" href="/img/logo/site.webmanifest">
+    <link rel="mask-icon" href="/img/logo/safari-pinned-tab.svg" color="#606060">
+    <link rel="shortcut icon" href="/img/logo/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-config" content="/img/logo/browserconfig.xml">
+    <meta name="theme-color" content="#f9ec66">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+
+
+
+
+
+    <title>SGOL - Self Help</title>
+
+    <style>
+
+        /*.embed-container {*/
+        /*    position: relative;*/
+        /*    padding-bottom: 56.25%;*/
+        /*    height: 0;*/
+        /*    overflow: hidden;*/
+        /*    max-width: 100%;*/
+        /*}*/
+
+        .video-container { position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden; }
+
+        .video-container iframe, .video-container object, .video-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+    </style>
+
+</head>
+<body class="container ">
+
+<h1>SHARED GOAL OF LIFE</h1>
+
+<a href="/index.html">Home</a>
+
+
+<h2>Self Help</h2>
+
+<p>
+    So a word on self help you can pick your poison for wanting it. but the wold needs a little help sometimes
+</p>
+
+<p>
+    Many people have said it better then I care to do so I will share.
+    So FIRST watch this:
+</p>
+
+<div class="video-container">
+    <iframe src="https://www.youtube-nocookie.com/embed/E7RgtMGL7CA" title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+</div>
+
+
+<p>
+    Now that you know what the just of it a pretty good goal is to not be shitty and tell the truth it's
+    surprisingly hard sometimes but usually its the least you can do. If you take on too much so just ask how much
+    am I willing an able to take on.
+</p>
+<p>
+    Now watch this:
+</p>
+
+<div class="video-container">
+    <iframe src="https://www.youtube-nocookie.com/embed/UPdT0zrfL7k" title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+</div>
+<p> And now to prove it watch this</p>
+
+<a href="https://www.netflix.com/title/81464765">14 Peaks Netflix</a>
+
+
+<blockquote id="qotd">
+    "YOLO" - 12 year old me.
+</blockquote>
+<button onclick="updateQOTD()">Another Quote</button>
+
+
+<script>
+    // let ps = document.querySelectorAll('p');
+    // let str = ps.forEach(p => console.log(p.innerText));
+
+    function updateQOTD() {
+        fetch('https://api.quotable.io/random')
+            .then(res => {
+                return res.json()
+            })
+            .then(data => {
+                let quote = document.getElementById('qotd');
+
+                quote.innerText = `"${data.content}" ~ ${data.author}`
+
+            })
+    }
+
+    updateQOTD()
+
+
+    // https://api.quotable.io/random?tags=technology,famous-quotes
+
+</script>
+
+</body>
+</html>
