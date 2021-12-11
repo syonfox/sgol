@@ -3,7 +3,7 @@ class GunAuth {
 
     constructor(gun) {
         if (!gun) {
-            gun = new Gun('https://portal3.lorrnel.com/gun');
+            gun = new Gun('https://bullchat.syon.ca/gun');
         }
         this.gun = gun;
         this.user = gun.user();
@@ -22,7 +22,7 @@ class GunAuth {
     promiseAuth() {
 
         return new Promise(resolve => {
-            if (!this.isLoggedIn()) {
+            if (this.isLoggedIn()) {
                 resolve(this.user);
             } else  {
                 return this.login()
@@ -84,10 +84,15 @@ class GunAuth {
             div.style.padding = '2em';
             username = username || '';
             div.innerHTML = `
-        
-        <label>Username:</label><input value="${username}">
-        <label>Password: </label><input type="password" >
+        <span></span>
+        <div style="display: flex; align-items: center;">\
+            <label>Username:</label>
+            <input value="${username}"></div>
+        <div style="display: flex; align-items: center;">
+            <label>Password: </label>
+            <input type="password" ></div>
         <button>Login</button>
+        
         `;
             let modal = jsPanel.modal.create({
                 headerTitle: 'Login Gun',
@@ -101,6 +106,7 @@ class GunAuth {
                 }
             });
 
+            let status = div.querySelector('span');
             div.querySelector('button').addEventListener('click', e => {
                 let inputs = div.querySelectorAll('input');
                 let u = inputs[0].value;
@@ -108,7 +114,8 @@ class GunAuth {
                 this.user.auth(u, p, ack => {
                     console.log(ack);
                     if (ack.err) {
-                        div.innerHTML += "<span style='background: #ff5b5b'>" + ack.err + '</span>';
+                        status.innerText += ack.err;
+                        status.style.ba
                     } else {
                         this.user.get('logins').set(Date.now());
 
@@ -117,7 +124,7 @@ class GunAuth {
 
                     }
                 });
-                module.onCl
+                // module.onCl
             })
         });
     }
