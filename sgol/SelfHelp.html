@@ -104,7 +104,9 @@
 <div class="video-container">
 <iframe src="https://www.youtube-nocookie.com/embed/HM7dgEF8H60" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
-
+<p>
+<button href="https://motivationmentalist.com/2018/05/29/value-of-time-watch-before-wasting-time/" class="popup_iframe" name="Modal">More Motivation</button>
+</p>
 <p>I haven't tried this yet but have heard good things <a
         href="https://www.selfauthoring.com/">www.selfauthoring.com</a></p>
 
@@ -137,6 +139,41 @@
 <script src="./node_modules/gun/gun.js"></script>
 <script src="./node_modules/gun/sea.js"></script>
 <script src="./src/js/gunauth.js"></script>
+
+
+
+<script>
+
+    Array.from(document.querySelectorAll('.popup_iframe')).forEach(btn => {
+        btn.addEventListener('click', e => {
+            let f = document.createElement('iframe');
+            console.log(btn);
+            f.style.width = '100%';
+            f.style.height = '96%';
+            f.style.margin = '-7px';
+            f.src = btn.getAttribute('href');
+
+            let width = 500
+            if (width > window.innerWidth) width = window.innerWidth - 50
+            let height = 600
+            if (height > window.innerHeight) height = window.innerHeight - 50
+
+
+            jsPanel.create({
+                content: f,
+                headerTitle: btn.name + ' - ' + f.src.split('://')[1],
+
+                panelSize: {
+                    width,
+                    height
+                },
+            })
+
+        });
+
+    })
+
+</script>
 
 
 <script>

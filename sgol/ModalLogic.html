@@ -29,6 +29,11 @@
 
     <style>
 
+        pre {
+            background: var(--background-alt);
+            overflow-x: auto;
+            padding: 1em;
+        }
 
     </style>
 
@@ -127,9 +132,11 @@ Planning:
 </pre>
 
 <p>
-    So what is Modal Logic?
 
-<h3>Introduction -</h3>
+
+
+<h3>Introduction </h3>
+So what is Modal Logic?
 First we may look at what we mean by <i>modal</i>
 <blockquote>
     "A modal is an expression (like ‘necessarily’ or ‘possibly’) that is used to qualify the truth of a judgement."
@@ -159,15 +166,80 @@ But we can see how it the term could relate to Logic
             facts.</small>
     </ol>
     " ~<a href="https://www.dictionary.com/browse/logic">Dictionary.com</a>
-    <button href="https://www.vocabulary.com/dictionary/logic" class="popup_iframe" name="Logic">View</button>
+    <button href="https://www.dictionary.com/browse/logic" class="popup_iframe" name="Logic">View</button>
 </blockquote>
+
+
+<p>
+    Again ill ask What is modal logic? Modal as in the mode of a operation of a word or idea more
+    spicificaly the mode of truth. Logic being tools for reasoning about the world.
+</p>
+<p></p>
+If we put it together <i>modal logic</i> - probably more verbosely modal propositional logic considers the
+mode of a statement over a variety of philosophic and scientific terms such as space, time, moral obligation,
+correctness etc.  The Base system concerns necessity [] and possibility <> With propositional logic.
+There are then a few condensed axioms that can be applied strategically to reason about arguments.
+</p><p>
+its basically propositional logic of sentences or statements we consider a statement ie.
+the sky is blue.  is this true? How do we prove it?
+</p><p>
+truth is a funny thing its dependant on the scope or aspects you consider and because we
+are human we have differing aspects to consider.  For the most part we try and find the ground truths. These are
+truths that given all available information would still hold.
+</p><p>
+<img src="img/truth.jpg" style="filter()">
+</p><p>
+Some might call the truth: Those conclusions that are evident once all relevant facts are correctly considered.
+</p><p>
+AN simple example of the search for truth may start by looking up on a sunny day saying yeah the sky is blue. And calling our statement true.
+</p><p>
+The problem with that is that when the sun goes down its red and fades to black. What is this I though the sky was blue!
+</p><p>
+The problem is the sky's color is conditional on the time and place so considering that we might say
+the sky is blue when it is day time. But what about clouds... And so on we get more specific
+until we give up and throw our hands in the are and say well its sometimes blue and sometimes not and
+it depends on the weather which we cannot predict. so the sky is possibly blue and possibly not blue ( <code><>The sky is blue ^ <>~The sky is blue </code>).
+more formal
+</p>
+<pre style="background: var(--background-alt); overflow-x: auto">
+    let p = "the sky is blue."
+    Observation:
+        <>p     the sky is possibly blue because I have seen it be blue
+        <>~p    the sky is possibly not blue because I have seen the night
+
+    We could then make our scope more specific or explore other expressions and implications
+    of what we have observed if we user the Def<> axiom (<> = ~[]~),
+    or in english possibility is just to be not necessarily false.
+    We find that:
+        <>~p = ~[]~~p = ~[]p    the sky is not necessarily blue because I have seen it be not blue.
+        <>P = ~[]~p             the sky is not necessarily not blue because i have seen it be blue.
+
+    condensed english: the sky is possibly but not necessarily blue.
+</pre>
+<p>
+Someone clever might point out. Well the sky is not actually blue it just appears blue when the sun is viewed
+through the right amount of atmosphere such that the blue light is scattered by the atmosphere a bit more and uniformly
+makes it into our eye causing us to see the sky a blue.  And you would we right. And we have found a divide in
+how we think about 'the sky' is it (a) What we see when we look up or (b) the atmosphere. This is why definitions
+are important in the pursuit of truth. We can sometimes find that the question is nonsense.
+</p><p>
+And that is modal logic. The Base system propositional logic plus necessarily = [] and possibly = <>
+</p><p>
+This is what we call system K or Kerpke semantics
+</p><p>
+
 
 
 The topic of provability seems interesting I may do my project on that do some research and explain in a blog post style
 What that is
-
+</p><p>
 If I add missing topics to my cheat cheat it may be useful as resource
+</p><p>
 
+</p><p>
+</p><p>
+</p><p>
+</p><p>
 
 <blockquote>"<b>1. The history of provability logic</b><br>
 
@@ -175,7 +247,7 @@ If I add missing topics to my cheat cheat it may be useful as resource
     (1933), where he introduces translations from intuitionist propositional logic into modal logic (more precisely,
     into the system nowadays called S4), and briefly mentions that provability can be viewed as a modal operator. Even
     earlier, C.I. Lewis started the modern study of modal logic by introducing strict implication as a kind of
-    deducibility, where he may have meant deducibility in a formal system like Principia Mathematica, but this is not
+    deducibility, where he may have meant : shadowdeducibility in a formal system like Principia Mathematica, but this is not
     clear from his writings.
 
     The other strand starts from research in meta-mathematics: what can mathematical theories say about themselves by
@@ -215,8 +287,9 @@ This is still possibly independent
 </p>
 <p>
 
-
 <img src="img/truth.jpg" alt="A ven diagram of universal truth vs human truth with provable science at the center."> </img>
+
+
 
 </p>
 <!--"If you want a thing done well, do it yourself." ~ Napoleon-->
