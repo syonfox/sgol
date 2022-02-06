@@ -11,8 +11,7 @@ most of this opinion we try to hold correct opinions so leave a comment with you
 Content will be mostly no frills blog posts and some tools or things we make that might be useful.
 
 
-## Who 
-
+## Who
 I, [Kier Lindsay](https://kierlindsay.ca) originally created this site, and most stuff will likely be mine but
 as a community grows beyond me many voices will be heard. I will also open this up to friends and family
 to publish polished work if they wish.

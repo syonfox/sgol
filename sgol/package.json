@@ -25,6 +25,7 @@
   "dependencies": {
     "gun": "^0.2020.1235",
     "jquery": "^3.6.0",
-    "jspanel4": "^4.13.0"
+    "jspanel4": "^4.13.0",
+    "nanogallery2": "^3.0.5"
   }
 }

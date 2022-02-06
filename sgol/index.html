@@ -15,29 +15,65 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
     <link rel="stylesheet" href="./node_modules/jspanel4/dist/jspanel.css">
+    <link rel="stylesheet" href="./node_modules/nanogallery2/dist/css/nanogallery2.min.css">
+    <link rel="stylesheet" href="./node_modules/nanogallery2/dist/css/nanogallery2.woff.min.css">
+    <link rel="stylesheet" href="./node_modules/nanogallery2/dist/css/nanogallery2.woff.min.css">
 
+    <!-- 1. Add CSS to `<head>` -->
+    <link href="https://releases.transloadit.com/uppy/v2.4.1/uppy.min.css" rel="stylesheet">
 
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        .sgolNav {
+            display: block;
+            background-color: orange;
+        }
+
+        .sgolNav a {
+            border-radius: 0em;
+            border: #3F69BC;
+            border: 4px purple;
+            height: 2em;
+
+            background-color: rgba(255, 255, 255, 0);
+        }
+
+        .sgolNav a:hover {
+            background-color: rgb(248, 97, 97);
+
+        }
+    </style>
+
     <title>SGOL - Home</title>
 </head>
 <body>
 <h1>Shared Goal Of Life</h1>
 
-Join me in sharing and discovering books on Goodreads.
+<!--Join me in sharing and discovering books on Goodreads.-->
 
-https://www.goodreads.com/friend/i?invite_token=ZmFlYzdjZDUtOGY4Ny00M2E2LWFkNDgtNDVlNzFhMTg3OGIz
+<!--https://www.goodreads.com/friend/i?invite_token=ZmFlYzdjZDUtOGY4Ny00M2E2LWFkNDgtNDVlNzFhMTg3OGIz-->
 
+<div class="sgolNav">
+    <a href="/SelfHelp.html">Self Help</a><br>
+    <a href="/ModalLogic.html">Modal Logic</a><br>
+    <a href="https://bullchat.syon.html">Bullchat (freedom by encryption)</a><br>
+    <a href="https://planmap.ca">PLANmap (hire us to unleash your data)</a><br>
 
-
-<a href="/SelfHelp.html">Self Help</a>
-<a href="https://store.sharedgoalof.life/">Store</a>
-
-
-
-
+    <a href="https://store.sharedgoalof.life/">Store</a><br>
+</div>
 <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+<script src="./node_modules/nanogallery2/dist/jquery.nanogallery2.min.js"></script>
+<!--<script src="./node_modules/nanogallery2/dist/jquery.nanogallery2.data_nano_photos_provider2.min.js"></script>-->
+<!--<div id="my_nanogallery2" data-nanogallery2 = '{ "itemsBaseURL": "./img/"}' >-->
+<!--    <a href="truth.jpg" data-ngthumb="truth.jpg"  data-ngdesc="Truth"        >Title Truth Image</a>-->
+<!--&lt;!&ndash;    <a href="img_02.jpg" data-ngthumb="img_02ts.jpg" data-ngdesc="Image 2 description" >Title Image2</a>&ndash;&gt;-->
+<!--&lt;!&ndash;    <a href="img_03.jpg" data-ngthumb="img_03t.jpg"                                    >Title Image3</a>&ndash;&gt;-->
+<!--</div>-->
+
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe-ui-default.min.js"></script>-->
 
 <!-- loading jsPanel javascript -->
 <script src="./node_modules/jspanel4/dist/jspanel.js"></script>
@@ -50,11 +86,477 @@ https://www.goodreads.com/friend/i?invite_token=ZmFlYzdjZDUtOGY4Ny00M2E2LWFkNDgt
 <!-- Gun -->
 <script src="./node_modules/gun/gun.js"></script>
 <script src="./node_modules/gun/sea.js"></script>
-<script src="./src/js/gunauth.js"></script>
-
+<!--<script src="./src/js/gunauth.js"></script>-->
+<script src="./node_modules/bullchat/js/bs.js"></script>
+<script src="./node_modules/bullchat/js/GunAuth.js"></script>
+<script src="./node_modules/bullchat/js/ArrayInput.js"></script>
+<script src="./node_modules/bullchat/js/BullChat.js"></script>
+<!--<script src="./node_modules/bullchat/BullchatMods.js"></script>-->
+<script src="./src/js/lib/multicoder.min.js"></script>
 
 <script src="./src/js/index.js"></script>
 
+<!--<MulticorderUI />-->
+
+
+<!-- 2. Add JS before the closing `</body>` -->
+<script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.min.js"></script>
+
+<!-- 3. Initialize -->
+<div class="UppyDragDrop"></div>
+<div class="DashboardContainer"></div>
+<button class="UppyModalOpenerBtn">UppyModalOpenerBtn</button>
+<!--<div id="nanogallery" data-nanogallery2>test</div>-->
+<!--<img src="https://media.istockphoto.com/photos/asian-woman-holding-covid-rapid-test-and-waiting-for-results-picture-id1345296778?b=1&k=20&m=1345296778&s=170667a&w=0&h=jSixqhOleGak2Z9xEXcjNYZ1cUqLm5J8LKzbBVMf2Cg="></img>-->
+<div id="my_nanogallery2" data-nanogallery2='{ "itemsBaseURL": "./img/"}'>
+    <a href="truth.jpg" data-ngthumb="truth.jpg" data-ngdesc="Truth">Title Truth Image</a>
+    <!--    <a href="img_02.jpg" data-ngthumb="img_02ts.jpg" data-ngdesc="Image 2 description" >Title Image2</a>-->
+    <!--    <a href="img_03.jpg" data-ngthumb="img_03t.jpg"                                    >Title Image3</a>-->
+</div>
+
+<!--//days: 2-->
+<script>
+
+
+    let fs = []
+
+    function gunStore() {
+        let state = {}
+        const listeners = new Set()
+
+        return {
+            getState: () => state,
+            setState: (patch) => {
+                if (patch.files) {
+                    console.log("patch", patch)
+                    let keys = Object.keys(patch.files);
+                    keys.forEach(async k => {
+                        let f = patch.files[k];
+                        if(f.data) {
+                            let i = {
+                                title: f.name,
+                                    src: await bs.blobToDataURL(f.data)
+                            }
+                            if(g1) {
+                                g1.addOneItem(i);
+                            }
+                            fs.push(i)
+                        }
+                    })
+
+                }
+                const prevState = state
+                const nextState = {...prevState, ...patch}
+
+                state = nextState
+
+                listeners.forEach((listener) => {
+                    listener(prevState, nextState, patch)
+                })
+            },
+            subscribe: (listener) => {
+                listeners.add(listener)
+                return () => listeners.remove(listener)
+            },
+            //bullchat
+            getValue: () => {
+                return state
+            },
+            setValue: val => {
+
+                // let prevState =
+
+                listeners.forEach((listener) => {
+                    listener(prevState, nextState, patch)
+                })
+            }
+
+
+        }
+    }
+
+
+    // const uppy = new Uppy.Core({
+    //     debug: true,
+    //     autoProceed: true,
+    //     store: gunStore(),
+    //     restrictions: {
+    //         maxFileSize: 10000000,
+    //         maxNumberOfFiles: 10,
+    //         minNumberOfFiles: 1,
+    //         allowedFileTypes: ['image/*', 'video/*'],
+    //         // requiredMetaFields: ['caption'],
+    //     }
+    // })
+    //     .use(Uppy.Dashboard, {
+    //         trigger: '.UppyModalOpenerBtn',
+    //         inline: true,
+    //         target: '.DashboardContainer',
+    //         showProgressDetails: true,
+    //         note: 'Images and video only, 1–10 files, up to 10 MB',
+    //         height: 470,
+    //         metaFields: [
+    //             {id: 'name', name: 'Name', placeholder: 'file name'},
+    //             {id: 'caption', name: 'Caption', placeholder: 'describe what the image is about'}
+    //         ],
+    //         browserBackButtonClose: false
+    //     })
+    //     // .use(Uppy.GoogleDrive, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
+    //     // .use(Uppy.Dropbox, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
+    //     // .use(Uppy.Box, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
+    //     // .use(Uppy.Instagram, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
+    //     // .use(Uppy.Facebook, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
+    //     // .use(Uppy.OneDrive, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
+    //     // .use(Uppy.Unsplash, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
+    //     .use(Uppy.Webcam, {target: Uppy.Dashboard})
+    //     .use(Uppy.Audio, {target: Uppy.Dashboard})
+    //     .use(Uppy.ScreenCapture, {target: Uppy.Dashboard})
+    //     .use(Uppy.ImageEditor, {target: Uppy.Dashboard})
+    //     // .use(Uppy.Tus, { endpoint: 'https://tusd.tusdemo.net/files/' })
+    //     .use(Uppy.DropTarget, {target: document.body})
+    //     .use(Uppy.GoldenRetriever)
+    //
+    // uppy.on('complete', result => {
+    //     console.log('successful files:', result.successful)
+    //     console.log('failed files:', result.failed)
+    // })
+
+
+    function buildUppy(config) {
+
+
+        let el = document.createElement('div');
+
+        let uppy = new Uppy.Core({
+            debug: true,
+            autoProceed: true,
+            store: gunStore(),
+            restrictions: {
+                maxFileSize: 10000000,
+                maxNumberOfFiles: 10,
+                minNumberOfFiles: 1,
+                allowedFileTypes: ['image/*', 'video/*'],
+                // requiredMetaFields: ['caption'],
+            }
+        })
+            .use(Uppy.Dashboard, {
+                // trigger: '.UppyModalOpenerBtn',
+                inline: true,
+                target: el,
+                showProgressDetails: true,
+                note: 'Images and video only, 1–10 files, up to 10 MB',
+                height: 470,
+                metaFields: [
+                    {id: 'name', name: 'Name', placeholder: 'file name'},
+                    {id: 'caption', name: 'Caption', placeholder: 'describe what the image is about'}
+                ],
+                browserBackButtonClose: false
+            })
+            // .use(Uppy.GoogleDrive, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
+            // .use(Uppy.Dropbox, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
+            // .use(Uppy.Box, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
+            // .use(Uppy.Instagram, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
+            // .use(Uppy.Facebook, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
+            // .use(Uppy.OneDrive, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
+            // .use(Uppy.Unsplash, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
+            .use(Uppy.Webcam, {target: Uppy.Dashboard})
+            .use(Uppy.Audio, {target: Uppy.Dashboard})
+            .use(Uppy.ScreenCapture, {target: Uppy.Dashboard})
+            .use(Uppy.ImageEditor, {target: Uppy.Dashboard})
+            // .use(Uppy.Tus, { endpoint: 'https://tusd.tusdemo.net/files/' })
+            .use(Uppy.DropTarget, {target: document.body})
+            .use(Uppy.GoldenRetriever)
+
+        uppy.on('complete', result => {
+            console.log('successful files:', result.successful)
+
+            console.log('failed files:', result.failed)
+        })
+
+        return {uppy, el}
+    }
+
+    //https://nanogallery2.nanostudio.org/documentation.html#ngy2_gallery
+    /**
+     * BNuilds a nangalery and returns its container div
+     * @param imgs
+     * @returns {HTMLDivElement}
+     */
+    function buildGallary(imgs) {
+
+
+        let id = 'gallery_' + bs.is++;
+        let div = document.createElement('div');
+        div.id = id;
+
+        if (!Array.isArray(imgs)) imgs = [];
+
+        document.body.appendChild(div);
+
+        $(div).nanogallery2({
+
+            items: [
+                // {
+                //     src:          'image_01.jpg',    // image url
+                //     srct:         'image_01ts.jpg',  // thumbnail url
+                //     title:        'Title Image1',    // media title
+                //     description:  'Description1'     // media description
+                // },
+                {src: './img/truth.jpg', title: 'Title Image2'},
+                ...imgs
+            ],
+
+            galleryDisplayMode: 'fullContent',
+            galleryDisplayMoreStep: 2,
+            galleryMaxRows: 2,
+            galleryPaginationMode: 'rectangles',//'rectangles' 'dots' 'numbers'
+            gallerySwipe: true,
+            paginationVisiblePages: 10,
+            galleryLastRowFull: false,
+            // gallerySorting //Sort order. No sorting by default. Possible values: 'titleAsc', 'titleDesc', 'reversed', 'random'
+            galleryMaxItems: 0,// 0 = no limit
+            galleryResizeAnimation: false,
+            galleryTheme: 'dark',
+            //openOnStart:  'albumID' or 'albumID/imageID'
+            thumbnailSelectable: true, //defualt false
+            galleryRenderDelay: 25, //ms
+            thumbnailDisplayOutsideScreen: true, //affects perfomance on large browser
+            galleryDisplayTransition: 'rotateX',//Possible values: 'none', 'rotateX', 'slideUp'
+
+            galleryDisplayTransitionDuration: 500,//ms
+            // itemsBaseURL: Example: itemsBaseURL: 'https://nanogallery2.nanostudio.org/samples/'
+            thumbnailAlbumDisplayImage: false, //default false	When set to true, display directly the lightbox when one album is opened in the gallery.
+            eventsDebounceDelay: 10, //Thumbnail's lazy display fine tuning Response delay in ms after resizing, rotation and scroll events.
+
+            thumbnailWidth: 'auto XS80 SM120',
+            thumbnailHeight: '200 XSauto SMauto'
+            //see docs ro layout options and lightbox
+        })
+
+
+        var data = $(div).nanogallery2('data');
+        console.log('data', data)
+        var instance = $(div).nanogallery2('instance');
+        console.log('instance', instance)
+
+
+        div.addOneItem = (item) => {
+            var ngy2data = data
+            // create the new item
+            var ID = ngy2data.items.length + 1;
+            var albumID = '0';
+
+            var newItem = NGY2Item.New(instance, item.title, '', ID, albumID, 'image', '' );
+
+            // define thumbnail -> image displayed in the gallery
+            newItem.thumbSet( item.src, 135, 204); // w,h
+
+            // define URL of the media to display in lightbox
+            newItem.setMediaURL( item.src, 'image');
+
+            // currently displayed album
+            if( ngy2data.items[ngy2data.gallery.albumIdx].GetID() == 0 ) {
+
+                // add new item to current Gallery Object Model (GOM)
+                newItem.addToGOM();
+
+                // refresh the display (-> only once if you add multiple items)
+                $(div).nanogallery2('resize');
+            }
+        }
+
+
+        div.addItem = (item) => {
+            // NGY2Item(instance, )
+            // newItem2.thumbSet( baseURL + 'berlin1t.jpg', 320, 212);
+            // newItem2.setMediaURL( baseURL + 'berlin1.jpg', 'img');
+            var ID = data.items.length + 1;
+            var albumID = '0';
+            var newItem = NGY2Item.New(instance, item.title, '', ID, albumID, 'image', '');
+            newItem.setMediaURL(item.src, 'image');
+        }
+
+        //setData
+        //getData
+        //
+
+        return div;
+
+
+    }
+
+
+    function Demo_Mosaic_1() {
+
+        jQuery("#nanogallery").nanogallery2({
+
+            // CONTENT SOURCE
+            // The optional add-on nanoPhotosProvider is used for this example - this is not mandatory and can easily be replaced by a list of medias
+            kind: 'nano_photos_provider2',
+            dataProvider: 'https://nano.gallery/ngy2/demo1/nano_photos_provider2/nano_photos_provider2.php',
+            album: 'people',
+
+            // GALLERY AND THUMBNAIL LAYOUT
+            galleryMosaic: [                       // default layout
+                {w: 2, h: 2, c: 1, r: 1},
+                {w: 1, h: 1, c: 3, r: 1},
+                {w: 1, h: 1, c: 3, r: 2},
+                {w: 1, h: 2, c: 4, r: 1},
+                {w: 2, h: 1, c: 5, r: 1},
+                {w: 2, h: 2, c: 5, r: 2},
+                {w: 1, h: 1, c: 4, r: 3},
+                {w: 2, h: 1, c: 2, r: 3},
+                {w: 1, h: 2, c: 1, r: 3},
+                {w: 1, h: 1, c: 2, r: 4},
+                {w: 2, h: 1, c: 3, r: 4},
+                {w: 1, h: 1, c: 5, r: 4},
+                {w: 1, h: 1, c: 6, r: 4}
+            ],
+            galleryMosaicXS: [                     // layout for XS width
+                {w: 2, h: 2, c: 1, r: 1},
+                {w: 1, h: 1, c: 3, r: 1},
+                {w: 1, h: 1, c: 3, r: 2},
+                {w: 1, h: 2, c: 1, r: 3},
+                {w: 2, h: 1, c: 2, r: 3},
+                {w: 1, h: 1, c: 2, r: 4},
+                {w: 1, h: 1, c: 3, r: 4}
+            ],
+            galleryMosaicSM: [                     // layout for SM width
+                {w: 2, h: 2, c: 1, r: 1},
+                {w: 1, h: 1, c: 3, r: 1},
+                {w: 1, h: 1, c: 3, r: 2},
+                {w: 1, h: 2, c: 1, r: 3},
+                {w: 2, h: 1, c: 2, r: 3},
+                {w: 1, h: 1, c: 2, r: 4},
+                {w: 1, h: 1, c: 3, r: 4}
+            ],
+            galleryMaxRows: 1,
+            galleryDisplayMode: 'rows',
+            gallerySorting: 'random',
+            thumbnailDisplayOrder: 'random',
+
+            thumbnailHeight: '180', thumbnailWidth: '220',
+            thumbnailAlignment: 'scaled',
+            thumbnailGutterWidth: 0, thumbnailGutterHeight: 0,
+            thumbnailBorderHorizontal: 0, thumbnailBorderVertical: 0,
+
+            thumbnailToolbarImage: null,
+            thumbnailToolbarAlbum: null,
+            thumbnailLabel: {display: false},
+
+            // DISPLAY ANIMATION
+            // for gallery
+            galleryDisplayTransitionDuration: 1500,
+            // for thumbnails
+            thumbnailDisplayTransition: 'imageSlideUp',
+            thumbnailDisplayTransitionDuration: 1200,
+            thumbnailDisplayTransitionEasing: 'easeInOutQuint',
+            thumbnailDisplayInterval: 60,
+
+            // THUMBNAIL HOVER ANIMATION
+            thumbnailBuildInit2: 'image_scale_1.15',
+            thumbnailHoverEffect2: 'thumbnail_scale_1.00_1.05_300|image_scale_1.15_1.00',
+            touchAnimation: true,
+            touchAutoOpenDelay: 500,
+
+            // LIGHTBOX
+            viewerToolbar: {display: false},
+            viewerTools: {
+                topLeft: 'label',
+                topRight: 'shareButton, rotateLeft, rotateRight, fullscreenButton, closeButton'
+            },
+
+            // GALLERY THEME
+            galleryTheme: {
+                thumbnail: {background: '#111'},
+            },
+
+            // DEEP LINKING
+            locationHash: true
+        });
+    }
+
+    // Demo_Mosaic_1()
+
+
+    class Panel {
+
+        static buildGallery() {
+
+
+        }
+
+        static buildUpload() {
+
+        }
+
+        constructor(config, panelOptions) {
+            let defaults = {
+                type: 'content', // galary, uppy, content
+                el: false, // HTMLElement or query selector
+                initPanel: false,
+            }
+
+            this.el = bs.getContainer(config.el);
+
+            this.panelOptions = bs.mergeDeep({
+                headerTitle: bs.niceName(config.type) + ' Panel',
+                content: this.el,
+            }, panelOptions)
+
+
+            if (config.initPanel) this.initPanel();
+        }
+
+        initPanel() {
+            this.panel = jsPanel.create(this.panelOptions);
+            return this.panel;
+        }
+
+
+    }
+
+    let g1 = buildGallary();
+    // document.appendChild(g1);
+    let u1 = buildUppy();
+
+    // u1.uppy.on('complete', result => {
+    //        console.log('successful files:', result.successful)
+    //
+    //        console.log('failed files:', result.failed)
+    //    })
+
+    // uppy.on('file-removed', (file, reason) => {
+    //     console.log('Removed file', file, ' because: ',reason)
+    // })
+    //
+    // uppy.on('file-added', (file, reason) => {
+    //     console.log('Added file', file , ' because: ',reason)
+    // })
+
+    $g1 = $(g1);
+    let w = 450;
+    if (document.body.clientWidth < w) w = document.body.clientWidth;
+
+    fs.forEach(f=>{
+        g1.addOneItem(f);
+    })
+    // g1.addItem()
+
+    let p = new Panel({
+            type: 'gallery',
+            el: g1,
+            initPanel: true,
+        },
+        {panelSize: {height: 510, width: w}})
+
+
+    let up = new Panel({
+        type: 'uppy',
+        el: u1.el,
+        initPanel: true,
+    }, {panelSize: {height: 510, width: w}})
+</script>
 
 </body>
 </html>
