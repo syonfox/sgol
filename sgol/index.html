@@ -1,602 +1,1335 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
-    <link rel="apple-touch-icon" sizes="180x180" href="/img/logo/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/img/logo/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/img/logo/favicon-16x16.png">
-    <link rel="manifest" href="/img/logo/site.webmanifest">
-    <link rel="mask-icon" href="/img/logo/safari-pinned-tab.svg" color="#606060">
-    <link rel="shortcut icon" href="/img/logo/favicon.ico">
-    <meta name="msapplication-TileColor" content="#ffc40d">
-    <meta name="msapplication-config" content="/img/logo/browserconfig.xml">
-    <meta name="theme-color" content="#f9ec66">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
-    <link rel="stylesheet" href="./node_modules/jspanel4/dist/jspanel.css">
-    <link rel="stylesheet" href="./node_modules/nanogallery2/dist/css/nanogallery2.min.css">
-    <link rel="stylesheet" href="./node_modules/nanogallery2/dist/css/nanogallery2.woff.min.css">
-    <link rel="stylesheet" href="./node_modules/nanogallery2/dist/css/nanogallery2.woff.min.css">
-
-    <!-- 1. Add CSS to `<head>` -->
-    <link href="https://releases.transloadit.com/uppy/v2.4.1/uppy.min.css" rel="stylesheet">
-
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shared Goal of Life</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
     <style>
-        .sgolNav {
-            display: block;
-            background-color: orange;
-            padding: 1em;
-            border-radius: 3px;
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .sgolNav a {
-            border-radius: 0em;
-            border: #3F69BC;
-            border: 4px purple;
-            height: 2em;
+        :root {
+            --bg: #0a0a0f;
+            --bg-soft: #12121a;
+            --fg: #e8e6e3;
+            --fg-dim: #6b6b7b;
+            --accent: #7c6cf0;
+            --accent2: #4ecdc4;
+            --accent3: #ff6b6b;
+            --line: rgba(255,255,255,0.06);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            padding: 20px 0;
+            transition: all 0.4s ease;
+        }
+
+        nav.scrolled {
+            padding: 14px 0;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .wordmark {
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            color: var(--fg);
+            text-decoration: none;
+        }
+
+        .wordmark em {
+            font-style: normal;
+            color: var(--accent);
+        }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #p5-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-
-            background-color: rgba(255, 255, 255, 0);
+            height: 100%;
+            z-index: 1;
         }
 
-        .sgolNav a:hover {
-            background-color: rgb(248, 97, 97);
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px;
+            width: 100%;
+            pointer-events: none;
+        }
 
+        .hero-content a,
+        .hero-content button {
+            pointer-events: auto;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent2);
+            margin-bottom: 28px;
+            padding: 8px 16px;
+            border: 1px solid rgba(78, 205, 196, 0.2);
+            border-radius: 100px;
+            background: rgba(78, 205, 196, 0.05);
+        }
+
+        .hero-tag::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent2);
+            border-radius: 50%;
+        }
+
+        h1 {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            font-size: clamp(2.4rem, 6.5vw, 5rem);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+            color: var(--accent);
+        }
+
+        h1 .dim-line {
+            display: block;
+            color: var(--accent2);
+            font-size: 0.55em;
+            margin-top: 14px;
+            letter-spacing: 0.04em;
+        }
+
+        .hero-sub {
+            margin-top: 24px;
+            font-size: 1.05rem;
+            color: var(--fg-dim);
+            max-width: 420px;
+            line-height: 1.7;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            margin-top: 36px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 26px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            letter-spacing: 0.01em;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--fg);
+            border: 1px solid var(--line);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(124, 108, 240, 0.06);
+        }
+
+        .btn-fill {
+            background: var(--fg);
+            color: var(--bg);
+        }
+
+        .btn-fill:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(232, 230, 227, 0.15);
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--fg-dim);
+            animation: scroll-bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes scroll-bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.5; }
+            50% { transform: translateX(-50%) translateY(8px); opacity: 1; }
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        .sec-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sec-label::after {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: var(--accent);
+            opacity: 0.4;
+        }
+
+        .sec-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        .sec-title .dim {
+            color: var(--fg-dim);
+            font-weight: 300;
+        }
+
+        .sec-desc {
+            color: var(--fg-dim);
+            font-size: 1.05rem;
+            max-width: 480px;
+            line-height: 1.7;
+        }
+
+        /* MANIFESTO */
+        .manifesto {
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            background: var(--bg-soft);
+        }
+
+        .manifesto-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .manifesto-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            font-weight: 300;
+            color: var(--fg);
+        }
+
+        .manifesto-text strong {
+            font-weight: 600;
+            color: var(--accent2);
+        }
+
+        .manifesto-text em {
+            font-style: normal;
+            color: var(--accent);
+        }
+
+        /* PRINCIPLES */
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--line);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 48px;
+        }
+
+        .principle {
+            background: var(--bg);
+            padding: 36px 28px;
+            transition: background 0.3s ease;
+            position: relative;
+        }
+
+        .principle:hover {
+            background: var(--bg-soft);
+        }
+
+        .principle-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--accent3);
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+            opacity: 0.7;
+        }
+
+        .principle h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: -0.01em;
+        }
+
+        .principle p {
+            font-size: 0.9rem;
+            color: var(--fg-dim);
+            line-height: 1.65;
+        }
+
+        .principle-icon {
+            width: 36px;
+            height: 36px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .principle-icon::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 8px;
+            border: 1px solid var(--line);
+            transition: border-color 0.3s ease;
+        }
+
+        .principle:hover .principle-icon::before {
+            border-color: var(--accent);
+        }
+
+        .principle-icon svg {
+            position: absolute;
+            inset: 6px;
+            width: 24px;
+            height: 24px;
+            stroke: var(--fg-dim);
+            transition: stroke 0.3s ease;
+        }
+
+        .principle:hover .principle-icon svg {
+            stroke: var(--accent);
+        }
+
+        /* DECLARE */
+        .declare-section {
+            background: var(--bg-soft);
+            border-top: 1px solid var(--line);
+        }
+
+        .declare-intro {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 80px;
+            align-items: start;
+            transition: opacity 0.4s ease;
+        }
+
+        .declare-intro.collapsed {
+            display: none;
+        }
+
+        .declare-points {
+            list-style: none;
+            margin-top: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .declare-points li {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            font-size: 0.95rem;
+            color: var(--fg-dim);
+            line-height: 1.6;
+        }
+
+        .declare-points li strong {
+            color: var(--fg);
+            font-weight: 500;
+        }
+
+        .declare-points li::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent2);
+            flex-shrink: 0;
+            margin-top: 9px;
+        }
+
+        .declare-points li:nth-child(2)::before { background: var(--accent); }
+        .declare-points li:nth-child(3)::before { background: var(--accent3); }
+
+        .declare-form {
+            background: var(--bg);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 40px;
+            position: relative;
+        }
+
+        .declare-form::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 15%;
+            right: 15%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent2), transparent);
+        }
+
+        .form-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--fg-dim);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .form-textarea {
+            width: 100%;
+            min-height: 120px;
+            background: var(--bg-soft);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 16px;
+            color: var(--fg);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            line-height: 1.6;
+            resize: vertical;
+            margin-bottom: 20px;
+            transition: border-color 0.25s ease;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .form-textarea::placeholder {
+            color: var(--fg-dim);
+        }
+
+        .form-input {
+            width: 100%;
+            background: var(--bg-soft);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 14px 16px;
+            color: var(--fg);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            transition: border-color 0.25s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .form-input::placeholder {
+            color: var(--fg-dim);
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 16px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            letter-spacing: 0.01em;
+        }
+
+        .form-submit:hover {
+            background: #6a5ae0;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 24px rgba(124, 108, 240, 0.3);
+        }
+
+        .form-submit:disabled {
+            opacity: 0.7;
+            cursor: default;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .form-note {
+            font-size: 0.8rem;
+            color: var(--fg-dim);
+            text-align: center;
+            margin-top: 14px;
+        }
+
+        /* DECLARE ACTIVE (after submit) */
+        .declare-active {
+            display: none;
+        }
+
+        .declare-active.visible {
+            display: block;
+            animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .transmit-status {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 24px;
+            border: 1px solid rgba(78, 205, 196, 0.25);
+            border-radius: 12px;
+            background: rgba(78, 205, 196, 0.05);
+            font-size: 0.9rem;
+            color: var(--accent2);
+            margin-bottom: 56px;
+            line-height: 1.6;
+        }
+
+        .transmit-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent2);
+            flex-shrink: 0;
+            animation: pulse-dot 1.5s ease-in-out infinite;
+        }
+
+        .goal-center {
+            text-align: center;
+            margin-bottom: 64px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .goal-center-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--fg-dim);
+            margin-bottom: 16px;
+        }
+
+        .goal-display {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+            color: var(--fg);
+            max-width: 680px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .declare-expanded {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+
+        .expanded-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .field-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .field-group .form-input,
+        .field-group .form-textarea {
+            margin-bottom: 0;
+        }
+
+        .field-group .form-textarea {
+            min-height: 80px;
+            font-size: 0.95rem;
+        }
+
+        .expanded-submit {
+            grid-column: 1 / -1;
+            margin-top: 8px;
+        }
+
+        .tips-sidebar {
+            background: var(--bg);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 28px;
+            position: sticky;
+            top: 100px;
+        }
+
+        .tips-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .tip {
+            margin-bottom: 18px;
+        }
+
+        .tip:last-child {
+            margin-bottom: 0;
+        }
+
+        .tip-key {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            color: var(--accent2);
+            background: rgba(78, 205, 196, 0.08);
+            border: 1px solid rgba(78, 205, 196, 0.15);
+            padding: 3px 10px;
+            border-radius: 6px;
+            margin-bottom: 6px;
+        }
+
+        .tip p {
+            font-size: 0.85rem;
+            color: var(--fg-dim);
+            line-height: 1.6;
+        }
+
+        /* FLOW */
+        .flow-section {
+            border-top: 1px solid var(--line);
+        }
+
+        .flow-steps {
+            display: flex;
+            gap: 0;
+            margin-top: 56px;
+            position: relative;
+        }
+
+        .flow-steps::before {
+            content: '';
+            position: absolute;
+            top: 28px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--line);
+        }
+
+        .flow-step {
+            flex: 1;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .flow-step-dot {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--fg-dim);
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .flow-step:hover .flow-step-dot {
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 0 24px rgba(124, 108, 240, 0.2);
+        }
+
+        .flow-step h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .flow-step p {
+            font-size: 0.85rem;
+            color: var(--fg-dim);
+            line-height: 1.6;
+        }
+
+        /* STATS */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--line);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 48px;
+        }
+
+        .stat {
+            background: var(--bg);
+            padding: 32px 24px;
+            text-align: center;
+        }
+
+        .stat-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.75rem;
+            font-weight: 500;
+            color: var(--accent2);
+            letter-spacing: -0.02em;
+        }
+
+        .stat-key {
+            font-size: 0.75rem;
+            color: var(--fg-dim);
+            margin-top: 6px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        /* QUOTE */
+        .quote-section {
+            text-align: center;
+            border-top: 1px solid var(--line);
+        }
+
+        .big-quote {
+            font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+            font-weight: 300;
+            line-height: 1.5;
+            max-width: 780px;
+            margin: 0 auto;
+            letter-spacing: -0.02em;
+        }
+
+        .big-quote .accent {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .big-quote .teal {
+            color: var(--accent2);
+            font-weight: 500;
+        }
+
+        .quote-attr {
+            margin-top: 28px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--fg-dim);
+        }
+
+        /* CTA */
+        .cta-section {
+            padding-bottom: 120px;
+        }
+
+        .cta-box {
+            background: var(--bg-soft);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            padding: 80px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 20%;
+            right: 20%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .cta-box h2 {
+            font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin-bottom: 14px;
+        }
+
+        .cta-box p {
+            color: var(--fg-dim);
+            font-size: 1.05rem;
+            max-width: 440px;
+            margin: 0 auto 36px;
+            line-height: 1.7;
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--line);
+            padding: 40px 0;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-word {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .footer-word em {
+            font-style: normal;
+            color: var(--accent);
+        }
+
+        .footer-note {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--fg-dim);
+            letter-spacing: 0.08em;
+        }
+
+        /* REVEAL */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .manifesto-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .declare-intro {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+            .declare-expanded {
+                grid-template-columns: 1fr;
+            }
+            .tips-sidebar {
+                position: static;
+            }
+            .expanded-fields {
+                grid-template-columns: 1fr;
+            }
+            .principles-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .flow-steps {
+                flex-direction: column;
+                gap: 32px;
+            }
+            .flow-steps::before {
+                display: none;
+            }
+            .cta-box {
+                padding: 60px 28px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .stats-row {
+                grid-template-columns: 1fr;
+            }
+            .hero-actions {
+                flex-direction: column;
+            }
+            .btn {
+                justify-content: center;
+            }
+            .declare-form {
+                padding: 28px;
+            }
         }
     </style>
-
-    <title>SGOL - Home</title>
 </head>
 <body>
-<h1>Shared Goal Of Life</h1>
 
-<!--Join me in sharing and discovering books on Goodreads.-->
+    <nav>
+        <div class="nav-inner">
+            <a href="#" class="wordmark">shared <em>goal</em> of life</a>
+        </div>
+    </nav>
 
-<!--https://www.goodreads.com/friend/i?invite_token=ZmFlYzdjZDUtOGY4Ny00M2E2LWFkNDgtNDVlNzFhMTg3OGIz-->
+    <header class="hero">
+        <div id="p5-canvas"></div>
+        <div class="hero-content">
+            <div class="hero-tag">an open network for builders</div>
+            <h1>
+                Shared Goal of Life
+                <span class="dim-line">we rise by lifting each other</span>
+            </h1>
+            <p class="hero-sub">An open network for people building things that matter. Share your vision, find the humans behind the avatars, and turn isolated ambition into collective momentum.</p>
+            <div class="hero-actions">
+                <a href="#declare" class="btn btn-fill">declare your goal</a>
+                <a href="#manifesto" class="btn btn-ghost">read the manifesto</a>
+            </div>
+        </div>
+        <div class="scroll-hint">scroll</div>
+    </header>
 
-<div class="sgolNav">
-    <a href="/SelfHelp.html">Self Help</a><br>
-    <a href="/ModalLogic.html">Modal Logic</a><br>
-    <a href="https://bullchat.syon.html">Bullchat (freedom by encryption)</a><br>
-    <a href="https://planmap.ca">PLANmap (hire us to unleash your data)</a><br>
-    <a href="https://store.sharedgoalof.life/">Store</a><br>
-</div>
+    <section class="manifesto" id="manifesto">
+        <div class="wrap">
+            <div class="manifesto-grid">
+                <div>
+                    <div class="sec-label">manifesto</div>
+                    <h2 class="sec-title">the ones who <span class="dim">share</span> win</h2>
+                    <p class="sec-desc">Not in a hustle-culture way. In a basic-human-decency way. Your dream deserves witnesses.</p>
+                </div>
+                <p class="manifesto-text">
+                    Every meaningful thing ever built was built by <strong>more than one person</strong>. Yet we treat goals like solo missions — locked in our heads, defended like secrets. <em>Shared Goal of Life</em> is the counter-argument: your vision is not diminished when others see it. It becomes <strong>real</strong>. It becomes <em>accountable</em>. It becomes <strong>alive</strong>.
+                </p>
+            </div>
+        </div>
+    </section>
 
+    <section>
+        <div class="wrap">
+            <div class="sec-label">principles</div>
+            <h2 class="sec-title">three rules. <span class="dim">zero fluff.</span></h2>
+            <div class="principles-grid">
+                <div class="principle reveal">
+                    <div class="principle-num">P.01</div>
+                    <div class="principle-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>
+                    </div>
+                    <h3>Clarity is Kindness</h3>
+                    <p>Vague goals attract vague help. When you share what you're actually building, you give people a way to genuinely contribute.</p>
+                </div>
+                <div class="principle reveal">
+                    <div class="principle-num">P.02</div>
+                    <div class="principle-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <h3>Reciprocity, Not Charity</h3>
+                    <p>This isn't a donation box. Every person both gives and receives. The exchange is the point — mutual elevation.</p>
+                </div>
+                <div class="principle reveal">
+                    <div class="principle-num">P.03</div>
+                    <div class="principle-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
+                    <h3>Momentum Over Motivation</h3>
+                    <p>Feelings fade. Systems don't. Small commitments, honest check-ins, and shared deadlines keep things moving.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<h4>Into</h4>
-<p>This website, shared goal of life is a work towards making things possible.  It refers to us all being in this mess
-    together and just trying our best to live a good life. Some things I think can help us is both more communication.
-    Towards this I have started the Bull Chat project.  I also aim to publish more documentation and guided for both my
-    tools and all the wonderful stuff developed by others. The whole browser and web stack is just amazingly powerful
-    and just a little bit scary.
-</p>
+    <section class="declare-section" id="declare">
+        <div class="wrap">
+            <div class="sec-label">take action</div>
+            <h2 class="sec-title">Declare your goal. <span class="dim">Now.</span></h2>
 
-<h4>Common Goals</h4>
-<p>One aim is maximize happiness or eliminate suffering. Although some may argue that suffering is a essential
-    part of the human condition without which we would not be truly happy.  This motivates the Buddhist train on which
-    dukka is caused by a misalignment between your internal reality and how the world really is. Do you really suffer or just feel hunger?</p>
+            <div class="declare-intro" id="declare-intro">
+                <div>
+                    <p class="sec-desc">Tomorrow is a trap. The friction of thinking is the only thing between you and the people who can help. Break it here.</p>
+                    <ul class="declare-points">
+                        <li><strong>Do you need help on your mission?</strong> Find it here.</li>
+                        <li><strong>Do you need clarity?</strong> Define it now.</li>
+                        <li><strong>Don't fall into the trap of tomorrow.</strong> Take action now to make a difference in the world.</li>
+                    </ul>
+                </div>
+                <div class="declare-form">
+                    <form id="goal-form">
+                        <label class="form-label" for="goal-text">What are you building?</label>
+                        <textarea class="form-textarea" id="goal-text" placeholder="e.g. I'm launching a community garden in my neighborhood and need people who know permaculture..." required></textarea>
+                        <label class="form-label" for="goal-email">Your email — we send your welcome gift here</label>
+                        <input class="form-input" type="email" id="goal-email" placeholder="you@example.com" required>
+                        <button type="submit" class="form-submit" id="goal-submit">Declare Goal</button>
+                        <p class="form-note">Every declaration receives a welcome gift from the network.</p>
+                    </form>
+                </div>
+            </div>
 
-<p>Alas to ground this in some shared reality after one walks down the path of the self, we then expand outwards to make some useful stuff for other. That is why we are here</p>
+            <div class="declare-active" id="declare-active">
+                <div class="transmit-status">
+                    <span class="transmit-dot"></span>
+                    <span>your goal is being sent to the network for work. you will receive a gift in your email in a few minutes. in the meantime — can you add more info below.</span>
+                </div>
 
-<h4>Cools Stuff</h4>
+                <div class="goal-center">
+                    <div class="goal-center-label">your declaration</div>
+                    <p class="goal-display" id="goal-display"></p>
+                </div>
 
-<p></p>
+                <div class="declare-expanded">
+                    <div class="expanded-fields">
+                        <div class="field-group full-width">
+                            <label class="form-label" for="field-title">Title for your goal</label>
+                            <input class="form-input" type="text" id="field-title" placeholder="Give it a name people can rally behind">
+                        </div>
+                        <div class="field-group full-width">
+                            <label class="form-label" for="field-who">Who needs it?</label>
+                            <input class="form-input" type="text" id="field-who" placeholder="Name the people or community this serves">
+                        </div>
+                        <div class="field-group">
+                            <label class="form-label" for="field-hard">Why is it difficult?</label>
+                            <textarea class="form-textarea" id="field-hard" placeholder="What makes this hard to do alone?"></textarea>
+                        </div>
+                        <div class="field-group">
+                            <label class="form-label" for="field-done">What have you already done?</label>
+                            <textarea class="form-textarea" id="field-done" placeholder="Progress so far — even the small steps"></textarea>
+                        </div>
+                        <button class="form-submit expanded-submit" id="profile-submit" type="button">Send Full Profile to Network</button>
+                    </div>
 
+                    <aside class="tips-sidebar">
+                        <div class="tips-title">quick tips</div>
+                        <div class="tip">
+                            <span class="tip-key">who</span>
+                            <p>Name the specific people or communities who benefit. "Everyone" helps no one.</p>
+                        </div>
+                        <div class="tip">
+                            <span class="tip-key">what</span>
+                            <p>Describe the concrete outcome. What does done look like? Be specific enough to measure.</p>
+                        </div>
+                        <div class="tip">
+                            <span class="tip-key">where</span>
+                            <p>Where does this live? A city, a platform, a neighborhood, an industry. Ground it somewhere real.</p>
+                        </div>
+                        <div class="tip">
+                            <span class="tip-key">when</span>
+                            <p>Deadlines create urgency. Even a rough timeline helps the network know when to push.</p>
+                        </div>
+                        <div class="tip">
+                            <span class="tip-key">why</span>
+                            <p>Why you? Why now? The personal stake is what turns a task into a mission.</p>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <section class="flow-section">
+        <div class="wrap">
+            <div class="sec-label">protocol</div>
+            <h2 class="sec-title">how the <span class="dim">signal</span> travels</h2>
+            <div class="flow-steps">
+                <div class="flow-step reveal">
+                    <div class="flow-step-dot">01</div>
+                    <h4>Declare</h4>
+                    <p>Write what you're building. One sentence minimum. Specific beats poetic.</p>
+                </div>
+                <div class="flow-step reveal">
+                    <div class="flow-step-dot">02</div>
+                    <h4>Broadcast</h4>
+                    <p>Share it with the network. People whose goals resonate will surface.</p>
+                </div>
+                <div class="flow-step reveal">
+                    <div class="flow-step-dot">03</div>
+                    <h4>Connect</h4>
+                    <p>Find the overlap. Their strength fills your gap. Your strength fills theirs.</p>
+                </div>
+                <div class="flow-step reveal">
+                    <div class="flow-step-dot">04</div>
+                    <h4>Build</h4>
+                    <p>Break it into milestones. Move in parallel. Celebrate the small wins loudly.</p>
+                </div>
+            </div>
+            <div class="stats-row">
+                <div class="stat reveal">
+                    <div class="stat-val">2.4K</div>
+                    <div class="stat-key">signals sent</div>
+                </div>
+                <div class="stat reveal">
+                    <div class="stat-val">87%</div>
+                    <div class="stat-key">replied within 24h</div>
+                </div>
+                <div class="stat reveal">
+                    <div class="stat-val">312</div>
+                    <div class="stat-key">goals completed</div>
+                </div>
+                <div class="stat reveal">
+                    <div class="stat-val">4.9</div>
+                    <div class="stat-key">trust rating</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <section class="quote-section">
+        <div class="wrap">
+            <div class="sec-label">why</div>
+            <p class="big-quote reveal">
+                When your <span class="teal">vision</span> aligns with someone else's <span class="accent">purpose</span>, you don't just find help — you find a co-conspirator.
+            </p>
+            <p class="quote-attr">— shared goal of life, est. 2026</p>
+        </div>
+    </section>
 
+    <section class="cta-section">
+        <div class="wrap">
+            <div class="cta-box reveal">
+                <h2>Your dream deserves witnesses.</h2>
+                <p>Join the network. Declare what you're building. Find the people who were waiting for exactly your kind of crazy.</p>
+                <a href="#declare" class="btn btn-fill">declare your goal</a>
+            </div>
+        </div>
+    </section>
 
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-word">shared <em>goal</em> of life</div>
+            <div class="footer-note">not servers. not algorithms. just humans.</div>
+        </div>
+    </footer>
 
-<div id="sgol-index-bc-comments"></div>
+    <script>
+        // ——— p5.js generative constellation ———
+        const particles = [];
+        const NUM = 90;
+        const LINK_DIST = 140;
+        const MOUSE_DIST = 200;
+        let canvasParent;
 
+        function setup() {
+            canvasParent = document.getElementById('p5-canvas');
+            const cnv = createCanvas(canvasParent.offsetWidth, canvasParent.offsetHeight);
+            cnv.parent('p5-canvas');
+            for (let i = 0; i < NUM; i++) {
+                particles.push({
+                    x: random(width),
+                    y: random(height),
+                    vx: random(-0.4, 0.4),
+                    vy: random(-0.4, 0.4),
+                    r: random(1.5, 3),
+                    hue: random() > 0.85 ? color(255, 107, 107) : (random() > 0.5 ? color(124, 108, 240) : color(78, 205, 196))
+                });
+            }
+        }
 
-<script src="./node_modules/jquery/dist/jquery.min.js"></script>
-<script src="./node_modules/nanogallery2/dist/jquery.nanogallery2.min.js"></script>
-<!--<script src="./node_modules/nanogallery2/dist/jquery.nanogallery2.data_nano_photos_provider2.min.js"></script>-->
-<!--<div id="my_nanogallery2" data-nanogallery2 = '{ "itemsBaseURL": "./img/"}' >-->
-<!--    <a href="truth.jpg" data-ngthumb="truth.jpg"  data-ngdesc="Truth"        >Title Truth Image</a>-->
-<!--&lt;!&ndash;    <a href="img_02.jpg" data-ngthumb="img_02ts.jpg" data-ngdesc="Image 2 description" >Title Image2</a>&ndash;&gt;-->
-<!--&lt;!&ndash;    <a href="img_03.jpg" data-ngthumb="img_03t.jpg"                                    >Title Image3</a>&ndash;&gt;-->
-<!--</div>-->
+        function draw() {
+            background(10, 10, 15, 28);
+            const mx = mouseX;
+            const my = mouseY;
 
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.js"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe-ui-default.min.js"></script>-->
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
 
-<!-- loading jsPanel javascript -->
-<script src="./node_modules/jspanel4/dist/jspanel.js"></script>
-<!-- optionally load jsPanel extensions -->
-<script src="./node_modules/jspanel4/dist/extensions/contextmenu/jspanel.contextmenu.js"></script>
-<script src="./node_modules/jspanel4/dist/extensions/hint/jspanel.hint.js"></script>
-<script src="./node_modules/jspanel4/dist/extensions/modal/jspanel.modal.js"></script>
-<script src="./node_modules/jspanel4/dist/extensions/tooltip/jspanel.tooltip.js"></script>
-<script src="./node_modules/jspanel4/dist/extensions/dock/jspanel.dock.js"></script>
-<!-- Gun -->
-<script src="./node_modules/gun/gun.js"></script>
-<script src="./node_modules/gun/sea.js"></script>
-<!--<script src="./src/js/gunauth.js"></script>-->
-<script src="./node_modules/bullchat/js/bs.js"></script>
-<script src="./node_modules/bullchat/js/GunAuth.js"></script>
-<script src="./node_modules/bullchat/js/ArrayInput.js"></script>
-<script src="./node_modules/bullchat/js/BullChat.js"></script>
-<!--<script src="./node_modules/bullchat/BullchatMods.js"></script>-->
-<script src="./src/js/lib/multicoder.min.js"></script>
+                if (p.x < 0 || p.x > width) p.vx *= -1;
+                if (p.y < 0 || p.y > height) p.vy *= -1;
 
-<script src="./src/js/index.js"></script>
-
-
-
-
-<!--<MulticorderUI />-->
-
-
-<!--&lt;!&ndash; 2. Add JS before the closing `</body>` &ndash;&gt;-->
-<!--<script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.min.js"></script>-->
-
-<!--&lt;!&ndash; 3. Initialize &ndash;&gt;-->
-<!--<div class="UppyDragDrop"></div>-->
-<!--<div class="DashboardContainer"></div>-->
-<!--<button class="UppyModalOpenerBtn">UppyModalOpenerBtn</button>-->
-<!--&lt;!&ndash;<div id="nanogallery" data-nanogallery2>test</div>&ndash;&gt;-->
-<!--&lt;!&ndash;<img src="https://media.istockphoto.com/photos/asian-woman-holding-covid-rapid-test-and-waiting-for-results-picture-id1345296778?b=1&k=20&m=1345296778&s=170667a&w=0&h=jSixqhOleGak2Z9xEXcjNYZ1cUqLm5J8LKzbBVMf2Cg="></img>&ndash;&gt;-->
-<!--<div id="my_nanogallery2" data-nanogallery2='{ "itemsBaseURL": "./img/"}'>-->
-<!--    <a href="truth.jpg" data-ngthumb="truth.jpg" data-ngdesc="Truth">Title Truth Image</a>-->
-<!--    &lt;!&ndash;    <a href="img_02.jpg" data-ngthumb="img_02ts.jpg" data-ngdesc="Image 2 description" >Title Image2</a>&ndash;&gt;-->
-<!--    &lt;!&ndash;    <a href="img_03.jpg" data-ngthumb="img_03t.jpg"                                    >Title Image3</a>&ndash;&gt;-->
-<!--</div>-->
-
-
-
-
-<!--
-//days: 2
-<script>
-
-
-
-
-    let fs = []
-
-    function gunStore() {
-        let state = {}
-        const listeners = new Set()
-
-        return {
-            getState: () => state,
-            setState: (patch) => {
-                if (patch.files) {
-                    console.log("patch", patch)
-                    let keys = Object.keys(patch.files);
-                    keys.forEach(async k => {
-                        let f = patch.files[k];
-                        if(f.data) {
-                            let i = {
-                                title: f.name,
-                                    src: await bs.blobToDataURL(f.data)
-                            }
-                            if(g1) {
-                                g1.addOneItem(i);
-                            }
-                            fs.push(i)
-                        }
-                    })
-
+                const dMouse = dist(p.x, p.y, mx, my);
+                if (dMouse < MOUSE_DIST) {
+                    const angle = atan2(p.y - my, p.x - mx);
+                    p.x += cos(angle) * 0.8;
+                    p.y += sin(angle) * 0.8;
                 }
-                const prevState = state
-                const nextState = {...prevState, ...patch}
 
-                state = nextState
-
-                listeners.forEach((listener) => {
-                    listener(prevState, nextState, patch)
-                })
-            },
-            subscribe: (listener) => {
-                listeners.add(listener)
-                return () => listeners.remove(listener)
-            },
-            //bullchat
-            getValue: () => {
-                return state
-            },
-            setValue: val => {
-
-                // let prevState =
-
-                listeners.forEach((listener) => {
-                    listener(prevState, nextState, patch)
-                })
+                noStroke();
+                fill(p.hue, 140);
+                circle(p.x, p.y, p.r);
             }
 
-
-        }
-    }
-
-
-    // const uppy = new Uppy.Core({
-    //     debug: true,
-    //     autoProceed: true,
-    //     store: gunStore(),
-    //     restrictions: {
-    //         maxFileSize: 10000000,
-    //         maxNumberOfFiles: 10,
-    //         minNumberOfFiles: 1,
-    //         allowedFileTypes: ['image/*', 'video/*'],
-    //         // requiredMetaFields: ['caption'],
-    //     }
-    // })
-    //     .use(Uppy.Dashboard, {
-    //         trigger: '.UppyModalOpenerBtn',
-    //         inline: true,
-    //         target: '.DashboardContainer',
-    //         showProgressDetails: true,
-    //         note: 'Images and video only, 1–10 files, up to 10 MB',
-    //         height: 470,
-    //         metaFields: [
-    //             {id: 'name', name: 'Name', placeholder: 'file name'},
-    //             {id: 'caption', name: 'Caption', placeholder: 'describe what the image is about'}
-    //         ],
-    //         browserBackButtonClose: false
-    //     })
-    //     // .use(Uppy.GoogleDrive, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
-    //     // .use(Uppy.Dropbox, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
-    //     // .use(Uppy.Box, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
-    //     // .use(Uppy.Instagram, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
-    //     // .use(Uppy.Facebook, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
-    //     // .use(Uppy.OneDrive, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
-    //     // .use(Uppy.Unsplash, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
-    //     .use(Uppy.Webcam, {target: Uppy.Dashboard})
-    //     .use(Uppy.Audio, {target: Uppy.Dashboard})
-    //     .use(Uppy.ScreenCapture, {target: Uppy.Dashboard})
-    //     .use(Uppy.ImageEditor, {target: Uppy.Dashboard})
-    //     // .use(Uppy.Tus, { endpoint: 'https://tusd.tusdemo.net/files/' })
-    //     .use(Uppy.DropTarget, {target: document.body})
-    //     .use(Uppy.GoldenRetriever)
-    //
-    // uppy.on('complete', result => {
-    //     console.log('successful files:', result.successful)
-    //     console.log('failed files:', result.failed)
-    // })
-
-
-    function buildUppy(config) {
-
-
-        let el = document.createElement('div');
-
-        let uppy = new Uppy.Core({
-            debug: true,
-            autoProceed: true,
-            store: gunStore(),
-            restrictions: {
-                maxFileSize: 10000000,
-                maxNumberOfFiles: 10,
-                minNumberOfFiles: 1,
-                allowedFileTypes: ['image/*', 'video/*'],
-                // requiredMetaFields: ['caption'],
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const a = particles[i];
+                    const b = particles[j];
+                    const d = dist(a.x, a.y, b.x, b.y);
+                    if (d < LINK_DIST) {
+                        const alpha = map(d, 0, LINK_DIST, 40, 0);
+                        stroke(124, 108, 240, alpha);
+                        strokeWeight(0.5);
+                        line(a.x, a.y, b.x, b.y);
+                    }
+                }
             }
-        })
-            .use(Uppy.Dashboard, {
-                // trigger: '.UppyModalOpenerBtn',
-                inline: true,
-                target: el,
-                showProgressDetails: true,
-                note: 'Images and video only, 1–10 files, up to 10 MB',
-                height: 470,
-                metaFields: [
-                    {id: 'name', name: 'Name', placeholder: 'file name'},
-                    {id: 'caption', name: 'Caption', placeholder: 'describe what the image is about'}
-                ],
-                browserBackButtonClose: false
-            })
-            // .use(Uppy.GoogleDrive, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
-            // .use(Uppy.Dropbox, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
-            // .use(Uppy.Box, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
-            // .use(Uppy.Instagram, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
-            // .use(Uppy.Facebook, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
-            // .use(Uppy.OneDrive, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
-            // .use(Uppy.Unsplash, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' })
-            .use(Uppy.Webcam, {target: Uppy.Dashboard})
-            .use(Uppy.Audio, {target: Uppy.Dashboard})
-            .use(Uppy.ScreenCapture, {target: Uppy.Dashboard})
-            .use(Uppy.ImageEditor, {target: Uppy.Dashboard})
-            // .use(Uppy.Tus, { endpoint: 'https://tusd.tusdemo.net/files/' })
-            .use(Uppy.DropTarget, {target: document.body})
-            .use(Uppy.GoldenRetriever)
 
-        uppy.on('complete', result => {
-            console.log('successful files:', result.successful)
-
-            console.log('failed files:', result.failed)
-        })
-
-        return {uppy, el}
-    }
-
-    //https://nanogallery2.nanostudio.org/documentation.html#ngy2_gallery
-    /**
-     * BNuilds a nangalery and returns its container div
-     * @param imgs
-     * @returns {HTMLDivElement}
-     */
-    function buildGallary(imgs) {
-
-        let id = 'gallery_' + bs.is++;
-        let div = document.createElement('div');
-        div.id = id;
-
-        if (!Array.isArray(imgs)) imgs = [];
-
-        document.body.appendChild(div);
-
-        $(div).nanogallery2({
-
-            items: [
-                // {
-                //     src:          'image_01.jpg',    // image url
-                //     srct:         'image_01ts.jpg',  // thumbnail url
-                //     title:        'Title Image1',    // media title
-                //     description:  'Description1'     // media description
-                // },
-                {src: './img/truth.jpg', title: 'Title Image2'},
-                ...imgs
-            ],
-
-            galleryDisplayMode: 'fullContent',
-            galleryDisplayMoreStep: 2,
-            galleryMaxRows: 2,
-            galleryPaginationMode: 'rectangles',//'rectangles' 'dots' 'numbers'
-            gallerySwipe: true,
-            paginationVisiblePages: 10,
-            galleryLastRowFull: false,
-            // gallerySorting //Sort order. No sorting by default. Possible values: 'titleAsc', 'titleDesc', 'reversed', 'random'
-            galleryMaxItems: 0,// 0 = no limit
-            galleryResizeAnimation: false,
-            galleryTheme: 'dark',
-            //openOnStart:  'albumID' or 'albumID/imageID'
-            thumbnailSelectable: true, //defualt false
-            galleryRenderDelay: 25, //ms
-            thumbnailDisplayOutsideScreen: true, //affects perfomance on large browser
-            galleryDisplayTransition: 'rotateX',//Possible values: 'none', 'rotateX', 'slideUp'
-
-            galleryDisplayTransitionDuration: 500,//ms
-            // itemsBaseURL: Example: itemsBaseURL: 'https://nanogallery2.nanostudio.org/samples/'
-            thumbnailAlbumDisplayImage: false, //default false	When set to true, display directly the lightbox when one album is opened in the gallery.
-            eventsDebounceDelay: 10, //Thumbnail's lazy display fine tuning Response delay in ms after resizing, rotation and scroll events.
-
-            thumbnailWidth: 'auto XS80 SM120',
-            thumbnailHeight: '200 XSauto SMauto'
-            //see docs ro layout options and lightbox
-        })
-
-
-        var data = $(div).nanogallery2('data');
-        console.log('data', data)
-        var instance = $(div).nanogallery2('instance');
-        console.log('instance', instance)
-
-
-        div.addOneItem = (item) => {
-            var ngy2data = data
-            // create the new item
-            var ID = ngy2data.items.length + 1;
-            var albumID = '0';
-
-            var newItem = NGY2Item.New(instance, item.title, '', ID, albumID, 'image', '' );
-
-            // define thumbnail -> image displayed in the gallery
-            newItem.thumbSet( item.src, 135, 204); // w,h
-
-            // define URL of the media to display in lightbox
-            newItem.setMediaURL( item.src, 'image');
-
-            // currently displayed album
-            if( ngy2data.items[ngy2data.gallery.albumIdx].GetID() == 0 ) {
-
-                // add new item to current Gallery Object Model (GOM)
-                newItem.addToGOM();
-
-                // refresh the display (-> only once if you add multiple items)
-                $(div).nanogallery2('resize');
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+                const d = dist(p.x, p.y, mx, my);
+                if (d < MOUSE_DIST) {
+                    const alpha = map(d, 0, MOUSE_DIST, 80, 0);
+                    stroke(78, 205, 196, alpha);
+                    strokeWeight(0.6);
+                    line(p.x, p.y, mx, my);
+                }
             }
+
+            stroke(124, 108, 240, 60);
+            strokeWeight(1.5);
+            noFill();
+            circle(mx, my, 24);
         }
 
-
-        div.addItem = (item) => {
-            // NGY2Item(instance, )
-            // newItem2.thumbSet( baseURL + 'berlin1t.jpg', 320, 212);
-            // newItem2.setMediaURL( baseURL + 'berlin1.jpg', 'img');
-            var ID = data.items.length + 1;
-            var albumID = '0';
-            var newItem = NGY2Item.New(instance, item.title, '', ID, albumID, 'image', '');
-            newItem.setMediaURL(item.src, 'image');
+        function windowResized() {
+            resizeCanvas(canvasParent.offsetWidth, canvasParent.offsetHeight);
         }
 
-        //setData
-        //getData
-        //
-
-        return div;
-
-
-    }
-
-
-    function Demo_Mosaic_1() {
-
-        jQuery("#nanogallery").nanogallery2({
-
-            // CONTENT SOURCE
-            // The optional add-on nanoPhotosProvider is used for this example - this is not mandatory and can easily be replaced by a list of medias
-            kind: 'nano_photos_provider2',
-            dataProvider: 'https://nano.gallery/ngy2/demo1/nano_photos_provider2/nano_photos_provider2.php',
-            album: 'people',
-
-            // GALLERY AND THUMBNAIL LAYOUT
-            galleryMosaic: [                       // default layout
-                {w: 2, h: 2, c: 1, r: 1},
-                {w: 1, h: 1, c: 3, r: 1},
-                {w: 1, h: 1, c: 3, r: 2},
-                {w: 1, h: 2, c: 4, r: 1},
-                {w: 2, h: 1, c: 5, r: 1},
-                {w: 2, h: 2, c: 5, r: 2},
-                {w: 1, h: 1, c: 4, r: 3},
-                {w: 2, h: 1, c: 2, r: 3},
-                {w: 1, h: 2, c: 1, r: 3},
-                {w: 1, h: 1, c: 2, r: 4},
-                {w: 2, h: 1, c: 3, r: 4},
-                {w: 1, h: 1, c: 5, r: 4},
-                {w: 1, h: 1, c: 6, r: 4}
-            ],
-            galleryMosaicXS: [                     // layout for XS width
-                {w: 2, h: 2, c: 1, r: 1},
-                {w: 1, h: 1, c: 3, r: 1},
-                {w: 1, h: 1, c: 3, r: 2},
-                {w: 1, h: 2, c: 1, r: 3},
-                {w: 2, h: 1, c: 2, r: 3},
-                {w: 1, h: 1, c: 2, r: 4},
-                {w: 1, h: 1, c: 3, r: 4}
-            ],
-            galleryMosaicSM: [                     // layout for SM width
-                {w: 2, h: 2, c: 1, r: 1},
-                {w: 1, h: 1, c: 3, r: 1},
-                {w: 1, h: 1, c: 3, r: 2},
-                {w: 1, h: 2, c: 1, r: 3},
-                {w: 2, h: 1, c: 2, r: 3},
-                {w: 1, h: 1, c: 2, r: 4},
-                {w: 1, h: 1, c: 3, r: 4}
-            ],
-            galleryMaxRows: 1,
-            galleryDisplayMode: 'rows',
-            gallerySorting: 'random',
-            thumbnailDisplayOrder: 'random',
-
-            thumbnailHeight: '180', thumbnailWidth: '220',
-            thumbnailAlignment: 'scaled',
-            thumbnailGutterWidth: 0, thumbnailGutterHeight: 0,
-            thumbnailBorderHorizontal: 0, thumbnailBorderVertical: 0,
-
-            thumbnailToolbarImage: null,
-            thumbnailToolbarAlbum: null,
-            thumbnailLabel: {display: false},
-
-            // DISPLAY ANIMATION
-            // for gallery
-            galleryDisplayTransitionDuration: 1500,
-            // for thumbnails
-            thumbnailDisplayTransition: 'imageSlideUp',
-            thumbnailDisplayTransitionDuration: 1200,
-            thumbnailDisplayTransitionEasing: 'easeInOutQuint',
-            thumbnailDisplayInterval: 60,
-
-            // THUMBNAIL HOVER ANIMATION
-            thumbnailBuildInit2: 'image_scale_1.15',
-            thumbnailHoverEffect2: 'thumbnail_scale_1.00_1.05_300|image_scale_1.15_1.00',
-            touchAnimation: true,
-            touchAutoOpenDelay: 500,
-
-            // LIGHTBOX
-            viewerToolbar: {display: false},
-            viewerTools: {
-                topLeft: 'label',
-                topRight: 'shareButton, rotateLeft, rotateRight, fullscreenButton, closeButton'
-            },
-
-            // GALLERY THEME
-            galleryTheme: {
-                thumbnail: {background: '#111'},
-            },
-
-            // DEEP LINKING
-            locationHash: true
+        // ——— nav scroll state ———
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 20);
         });
-    }
 
-    // Demo_Mosaic_1()
+        // ——— intersection reveal ———
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('in');
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.15 });
 
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    class Panel {
+        // ——— declare flow: submit -> transform ———
+        const goalForm = document.getElementById('goal-form');
+        const intro = document.getElementById('declare-intro');
+        const active = document.getElementById('declare-active');
+        const goalDisplay = document.getElementById('goal-display');
+        const submitBtn = document.getElementById('goal-submit');
 
-        static buildGallery() {
+        goalForm.addEventListener('submit', (e) => {
+            e.preventDefault();
 
+            const goalText = document.getElementById('goal-text').value.trim();
+            const email = document.getElementById('goal-email').value.trim();
+            if (!goalText || !email) return;
 
-        }
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'transmitting to network';
 
-        static buildUpload() {
+            setTimeout(() => {
+                goalDisplay.textContent = goalText;
+                intro.classList.add('collapsed');
+                active.classList.add('visible');
+                active.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 1200);
+        });
 
-        }
-
-        constructor(config, panelOptions) {
-            let defaults = {
-                type: 'content', // galary, uppy, content
-                el: false, // HTMLElement or query selector
-                initPanel: false,
-            }
-
-            this.el = bs.getContainer(config.el);
-
-            this.panelOptions = bs.mergeDeep({
-                headerTitle: bs.niceName(config.type) + ' Panel',
-                content: this.el,
-            }, panelOptions)
-
-
-            if (config.initPanel) this.initPanel();
-        }
-
-        initPanel() {
-            this.panel = jsPanel.create(this.panelOptions);
-            return this.panel;
-        }
-
-
-    }
-
-    let g1 = buildGallary();
-    // document.appendChild(g1);
-    let u1 = buildUppy();
-
-    // u1.uppy.on('complete', result => {
-    //        console.log('successful files:', result.successful)
-    //
-    //        console.log('failed files:', result.failed)
-    //    })
-
-    // uppy.on('file-removed', (file, reason) => {
-    //     console.log('Removed file', file, ' because: ',reason)
-    // })
-    //
-    // uppy.on('file-added', (file, reason) => {
-    //     console.log('Added file', file , ' because: ',reason)
-    // })
-
-    $g1 = $(g1);
-    let w = 450;
-    if (document.body.clientWidth < w) w = document.body.clientWidth;
-
-    fs.forEach(f=>{
-        g1.addOneItem(f);
-    })
-    // g1.addItem()
-
-    let p = new Panel({
-            type: 'gallery',
-            el: g1,
-            initPanel: true,
-        },
-        {panelSize: {height: 510, width: w}})
-
-
-    let up = new Panel({
-        type: 'uppy',
-        el: u1.el,
-        initPanel: true,
-    }, {panelSize: {height: 510, width: w}})
-</script>
--->
+        document.getElementById('profile-submit').addEventListener('click', function () {
+            this.textContent = 'Profile Sent. The Network Has Your Back.';
+            this.style.background = '#4ecdc4';
+        });
+    </script>
 
 </body>
 </html>
